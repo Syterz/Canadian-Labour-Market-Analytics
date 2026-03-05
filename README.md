@@ -75,7 +75,7 @@ Statistics Canada CSVs
 │   └── workflows/
 │       └── dbt_test.yml             # CI: runs dbt test on PR (To be added)
 │
-├── .gitignore (To be added)
+├── .gitignore
 ├── requirements.txt (To be added)
 ├── SECURITY.md (To be added)
 └── README.md
