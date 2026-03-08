@@ -46,7 +46,7 @@ Statistics Canada CSVs
 │
 ├── databricks/
 │   ├── transform_vacancy_metrics.ipynb  <- Schema work + vacancy rate computation + output to S3 (curated)
-│   └── register_curated_tables.ipynb    <- Registers curated Parquet as Delta 
+│   └── register_curated_tables.ipynb    <- Registers curated Parquet as Delta (To be added)
 |
 ├── dbt/
 │   ├── models/
