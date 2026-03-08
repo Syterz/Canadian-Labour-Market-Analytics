@@ -19,13 +19,10 @@ Statistics Canada CSVs
    Databricks                   ← Schema normalization, business metric computation (vacancy rate per 1000 employed)
         │  
         ▼
-   S3 (curated/)                ← Final Parquet ready for warehouse load
+   S3 (curated/)                ← Final Parquet ready for dbt
         │
         ▼
-   Redshift Serverless          ← Analytical warehouse (staging + mart tables)
-        │
-        ▼
-   dbt Core                     ← Mart models, data tests, documentation
+   dbt Core(dbt-databricks)     ← Mart models, data tests, documentation
         │
         ▼
    Streamlit / Power BI         ← Dashboard layer
@@ -46,11 +43,6 @@ Statistics Canada CSVs
 │
 ├── databricks/
 │   └── transform_vacancy_metrics.ipynb  # Schema work + vacancy rate computation + output to S3
-│
-├── redshift/
-│   └── ddl/
-│       ├── staging_vacancies.sql    # Staging table DDL (To be added)
-│       └── copy_commands.sql        # COPY from S3 commands (To be added)
 │
 ├── dbt/
 │   ├── models/
@@ -86,10 +78,10 @@ Statistics Canada CSVs
 ## Reproducing This Pipeline
 
 ### Prerequisites
-- AWS account with S3, Glue, and Redshift Serverless access
-- Databricks Community Edition account
+- AWS account with S3 and Glue access
+- Databricks account (Community Edition works)
 - Python 3.10+
-- dbt Core installed (`pip install dbt-redshift`)
+- dbt Core installed (`pip install dbt-databricks`)
 
 ### 1. Set Up S3 Buckets
 ```bash
@@ -111,7 +103,7 @@ Update the S3 paths in cell 2 and run all cells.
 Output is written to `s3://your-bucket/processed/`.
 
 > [!NOTE]
-> Redshift, dbt, and Dashboard to be added later on
+> Dbt, and Dashboard to be added later on
 
 ---
 
@@ -128,16 +120,20 @@ Data is publicly available under the Statistics Canada Open Licence.
 
 ## Design Decisions
 
-**Why Glue for ingestion and Databricks for transformation?**  
-Glue was used for the ingestion layer, column selection, type casting, string normalization, date filtering, and writing partitioned Parquet to S3. It runs close to the data source and the partitioning by Year and GEO makes downstream reads significantly faster.
-Databricks handled the transformation layer: joining datasets, computing vacancy rates, and building the regional aggregations that feed the warehouse. A notebook environment suited this stage better because the logic required iterative exploration before it stabilized into repeatable code.
+**Why Glue for ingestion and Databricks for transformation?**
+Glue handled the ingestion layer: column selection, type casting, string normalization, date filtering, and writing partitioned Parquet to S3. Partitioning by Year and GEO at this stage makes downstream reads faster by pruning irrelevant partitions before any transformation begins.
+
+Databricks handled the heavier transformation work: normalizing NAICS industry codes across datasets, resolving date granularity mismatches between monthly and quarterly sources, joining employment figures to vacancy data, and computing vacancies per 1,000 employed as a normalized rate comparable across provinces and industries. The notebook environment suited this stage because the join logic and NAICS name standardization required iterative validation: null checks, duplicate detection, and left-anti joins, to identify unmatched industries before the transformations were stable enough to be committed as repeatable code.
+
+**Why dbt on Databricks instead of a separate warehouse?**
+Running dbt directly on Databricks avoids an unnecessary data movement step into a separate warehouse. The curated Delta tables are already query-ready, and dbt-databricks connects natively to the cluster, keeping the stack unified and reducing infrastructure overhead.
 
 ---
 
 ## Skills Demonstrated
-- Cloud data engineering (AWS S3, Glue, Redshift Serverless)
+- Cloud data engineering (AWS S3, Glue)
 - Distributed processing (PySpark on Glue, Databricks)
-- Analytics engineering (dbt models, tests, documentation)
+- Analytics engineering (dbt-databricks, models, tests, documentation)
 - Infrastructure basics (IAM roles, Secrets Manager for credentials)
 - CI/CD (GitHub Actions running dbt tests on PR)
 - Dashboard development (Streamlit / Power BI)
