@@ -22,6 +22,9 @@ Statistics Canada CSVs
    S3 (curated/)                ← Final Parquet ready for dbt
         │
         ▼
+   Databricks (Delta Tables)    ← Curated Parquet registered as managed Delta tables via Hive Metastore
+        │
+        ▼
    dbt Core(dbt-databricks)     ← Mart models, data tests, documentation
         │
         ▼
@@ -42,8 +45,9 @@ Statistics Canada CSVs
 │   └── glue_ETL_job.py       # PySpark job: raw CSV → cleaned Parquet
 │
 ├── databricks/
-│   └── transform_vacancy_metrics.ipynb  # Schema work + vacancy rate computation + output to S3
-│
+│   ├── transform_vacancy_metrics.ipynb  <- Schema work + vacancy rate computation + output to S3 (curated)
+│   └── register_curated_tables.ipynb    <- Registers curated Parquet as Delta 
+|
 ├── dbt/
 │   ├── models/
 │   │   ├── staging/
