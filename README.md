@@ -157,9 +157,9 @@ Output are saved to the Hive Metastore of Databricks.
 
 ## Data Source
 Statistics Canada
-<br>[NAICS Employed Data](https://www150.statcan.gc.ca/n1/tbl/csv/14100201-eng.zip)             -Link directly downloads the file, this table may have been updated on February 2026 into a different format/table as original website URL may have changed as of February 2026, under investigation)
-<br>[Quarterly NAICS Job Vacancies](https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1410044201&pickMembers%5B0%5D=1.1&cubeTimeFrame.startMonth=01&cubeTimeFrame.startYear=2015&cubeTimeFrame.endMonth=10&cubeTimeFrame.endYear=2025&referencePeriods=20150101%2C20251001)
-<br>[Monthly Job Vacancies](https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1410037101&cubeTimeFrame.startMonth=01&cubeTimeFrame.startYear=2025&cubeTimeFrame.endMonth=11&cubeTimeFrame.endYear=2025&referencePeriods=20250101%2C20251101)  - Contains no NAICS
+- [NAICS Employed Data](https://www150.statcan.gc.ca/n1/tbl/csv/14100201-eng.zip)             -Link directly downloads the file, this table may have been updated on February 2026 into a different format/table as original website URL may have changed as of February 2026, under investigation)
+- [Quarterly NAICS Job Vacancies](https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1410044201&pickMembers%5B0%5D=1.1&cubeTimeFrame.startMonth=01&cubeTimeFrame.startYear=2015&cubeTimeFrame.endMonth=10&cubeTimeFrame.endYear=2025&referencePeriods=20150101%2C20251001)
+- [Monthly Job Vacancies](https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1410037101&cubeTimeFrame.startMonth=01&cubeTimeFrame.startYear=2025&cubeTimeFrame.endMonth=11&cubeTimeFrame.endYear=2025&referencePeriods=20250101%2C20251101)  - Contains no NAICS breakdown
 
 Data is publicly available under the Statistics Canada Open Licence.
 
