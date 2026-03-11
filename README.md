@@ -64,13 +64,18 @@ Statistics Canada CSVs
 ├── dbt/
 │   ├── models/
 │   │   ├── staging/
-│   │   │   └── stg_vacancies.sql (To be added)
+│   │   │   ├── sources.yml                  # defines Delta table sources in Databricks
+│   │   │   ├── schema.yml                   # column-level tests for staging models
+│   │   │   ├── stg_monthly_vacancies.sql    # monthly job vacancies + vacancies per 1,000
+│   │   │   ├── stg_naics_employed.sql       # employment figures by NAICS industry
+│   │   │   └── stg_quarterly_vacancies.sql  # quarterly vacancies + wage data + vacancies per 1,000 by NAICS
+│   │   │
 │   │   ├── intermediate/
 │   │   │   └── int_vacancies_by_region.sql (To be added)
 │   │   └── marts/
 │   │       └── mart_vacancy_rates.sql (To be added)
 │   ├── tests/
-│   └── dbt_project.yml (To be added)
+│   └── dbt_project.yml
 │
 ├── airflow/
 │   └── dags/
@@ -157,7 +162,7 @@ Output are saved to the Unity Catalog of Databricks.
 
 ## Data Source
 Statistics Canada
-- [NAICS Employed Data](https://www150.statcan.gc.ca/n1/tbl/csv/14100201-eng.zip)             -Link directly downloads the file, this table may have been updated on February 2026 into a different format/table as original website URL may have changed as of February 2026, under investigation)
+- [NAICS Employed Data](https://www150.statcan.gc.ca/n1/tbl/csv/14100201-eng.zip) -⚠️ Original website URL may have changed as of February 2026, under investigation
 - [Quarterly NAICS Job Vacancies](https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1410044201&pickMembers%5B0%5D=1.1&cubeTimeFrame.startMonth=01&cubeTimeFrame.startYear=2015&cubeTimeFrame.endMonth=10&cubeTimeFrame.endYear=2025&referencePeriods=20150101%2C20251001)
 - [Monthly Job Vacancies](https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1410037101&cubeTimeFrame.startMonth=01&cubeTimeFrame.startYear=2025&cubeTimeFrame.endMonth=11&cubeTimeFrame.endYear=2025&referencePeriods=20250101%2C20251101)  - Contains no NAICS breakdown
 
