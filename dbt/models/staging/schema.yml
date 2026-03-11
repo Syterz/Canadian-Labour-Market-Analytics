@@ -1,0 +1,41 @@
+version: 2
+
+models:
+  - name: stg_monthly_vacancies
+    columns:
+      - name: date_parsed
+        tests:
+          - not_null
+      - name: geo
+        tests:
+          - not_null
+      - name: year
+        tests:
+          - not_null
+
+  - name: stg_quarterly_vacancies
+    columns:
+      - name: date_parsed
+        tests:
+          - not_null
+      - name: geo
+        tests:
+          - not_null
+      - name: naics
+        tests:
+          - not_null
+      - name: year
+        tests:
+          - not_null
+
+  - name: stg_naics_employed
+    columns:
+      - name: date_parsed
+        tests:
+          - not_null
+      - name: geo
+        tests:
+          - not_null
+      - name: naics
+        tests:
+          - not_null

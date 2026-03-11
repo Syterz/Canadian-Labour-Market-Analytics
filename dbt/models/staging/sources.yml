@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: canada_labour_market
+    database: workspace
+    schema: canada_labour_market
+    tables:
+      - name: monthly_vacancies_curated
+      - name: naics_employed_curated
+      - name: quarterly_vacancies_curated
