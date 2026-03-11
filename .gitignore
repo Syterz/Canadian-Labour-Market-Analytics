@@ -24,6 +24,8 @@ dbt/target/
 dbt/dbt_packages/
 dbt/logs/
 dbt/.user.yml
+profiles.yml
+~/.dbt/profiles.yml
 
 # AWS
 .aws/
@@ -42,3 +44,6 @@ Thumbs.db
 .vscode/
 .idea/
 *.iml
+
+# logs
+logs/
