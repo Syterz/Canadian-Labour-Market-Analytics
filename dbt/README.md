@@ -1,15 +1,22 @@
-Welcome to your new dbt project!
+# Canadian Labour Market Analytics — dbt Project
 
-### Using the starter project
+This dbt project transforms curated Delta tables in Databricks into business-ready mart models for analysing Canadian labour market trends.
 
-Try running the following commands:
-- dbt run
-- dbt test
+## Connection
+- **Adapter**: dbt-databricks
+- **Catalog**: workspace
+- **Schema**: canada_labour_market
 
+## Models
+- **Staging**: Clean views on top of curated Delta tables
+- **Marts**: Business metrics including vacancy rates, YoY trends, and sector breakdowns (in progress)
 
-### Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [chat](https://community.getdbt.com/) on Slack for live discussions and support
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
+## Running the project
+```bash
+dbt run        # build all models
+dbt test       # run all tests
+dbt docs serve # view documentation
+```
+
+## Tests
+All staging models are tested for null values on critical columns.
