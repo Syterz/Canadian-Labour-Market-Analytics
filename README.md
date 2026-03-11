@@ -81,12 +81,12 @@ Statistics Canada CSVs
 │
 ├── data/
 │   └── sample/
-│       ├── raw/          # 100-row sample of raw input
+│       ├── raw/          # 100-row sample of raw data
 │       │   ├── naics_employed_sample.csv        
 │       │   ├── monthly_vacancies_sample.csv     
 │       │   └── quarterly_vacancies_sample.csv  
 │       │
-│       └── curated/      # 100-row samples of curated samples
+│       └── curated/      # 100-row samples of curated data
 │       │    ├── monthly_curated_sample.csv       
 │       │    ├── naics_curated_sample.csv         
 │       │    └── quarterly_curated_sample.csv     
