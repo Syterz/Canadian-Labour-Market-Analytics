@@ -1,0 +1,101 @@
+Year,Date_parsed,GEO,NAICS,Total Employment
+2018,2018-04-01,Ontario,Vocational rehabilitation services [6243],10869.00
+2018,2018-05-01,Ontario,"Warehousing and storage [493,4931]",26580.00
+2018,2018-06-01,Ontario,Building finishing contractors [2383],36239.00
+2018,2018-07-01,Ontario,Sugar and confectionery product manufacturing [3113],4067.00
+2018,2018-07-01,Ontario,Charter bus industry [4855],2023.00
+2018,2018-07-01,Ontario,Individual and family services [6241],64314.00
+2018,2018-08-01,Ontario,Other textile product mills [3149],2405.00
+2018,2018-08-01,Ontario,Footwear manufacturing [3162],247.00
+2018,2018-08-01,Ontario,Other amusement and recreation industries [7139],76842.00
+2018,2018-09-01,Ontario,Freight transportation arrangement [4885],18773.00
+2018,2018-10-01,Ontario,Other heavy and civil engineering construction [2379],6497.00
+2018,2018-10-01,Ontario,Manufacturing and reproducing magnetic and optical media [3346],775.00
+2018,2018-11-01,Ontario,Seafood product preparation and packaging [3117],693.00
+2018,2018-12-01,Ontario,"Forestry, logging and support [11N]",4419.00
+2018,2018-12-01,Ontario,Rental and leasing services [532],22858.00
+2018,2018-12-01,Ontario,Office administrative services [5611],24718.00
+2018,2018-12-01,Ontario,Home health care services [6216],39610.00
+2021,2021-01-01,British Columbia,"Ventilation, heating, air-conditioning and commercial refrigeration equipment manufacturing [3334]",1267.00
+2021,2021-01-01,British Columbia,General rental centres [5323],199.00
+2021,2021-02-01,British Columbia,Health and personal care retailers [4561],29467.00
+2021,2021-02-01,British Columbia,Florists [4593],790.00
+2021,2021-04-01,British Columbia,Fabric mills [3132],nan
+2021,2021-04-01,British Columbia,Vending machine operators [4542],133.00
+2021,2021-04-01,British Columbia,Insurance carriers and related activities [524],28232.00
+2021,2021-05-01,British Columbia,"Electronics and appliance stores [443,4431]",6723.00
+2021,2021-06-01,British Columbia,Seafood product preparation and packaging [3117],2545.00
+2021,2021-06-01,British Columbia,"Other machinery, equipment and supplies merchant wholesalers [4179]",7015.00
+2021,2021-06-01,British Columbia,"Lessors of non-financial intangible assets (except copyrighted works) [533,5331]",1235.00
+2021,2021-07-01,British Columbia,"Pesticide, fertilizer and other agricultural chemical manufacturing [3253]",531.00
+2021,2021-07-01,British Columbia,Other personal services [8129],4109.00
+2021,2021-09-01,British Columbia,Interurban and rural bus transportation [4852],nan
+2021,2021-09-01,British Columbia,Business support services [5614],6856.00
+2023,2023-03-01,Canada,Health and personal care retailers [4561],215950.00
+2023,2023-05-01,Canada,Services to buildings and dwellings [5617],217905.00
+2023,2023-05-01,Canada,Psychiatric and substance use hospitals [6222],26727.00
+2023,2023-07-01,Canada,Other chemical product manufacturing [3259],11299.00
+2023,2023-07-01,Canada,Social assistance [624],424895.00
+2023,2023-08-01,Canada,Food manufacturing [311],263984.00
+2023,2023-10-01,Canada,Apparel knitting mills [3151],840.00
+2023,2023-10-01,Canada,Scheduled air transportation [4811],57256.00
+2018,2018-05-01,Canada,Support activities for water transportation [4883],11472.00
+2018,2018-06-01,Canada,Primary metal manufacturing [331],57588.00
+2018,2018-06-01,Canada,Cannabis merchant wholesalers [4134],nan
+2018,2018-06-01,Canada,Local messengers and local delivery [4922],7199.00
+2018,2018-07-01,Canada,Non-ferrous metal (except aluminum) production and processing [3314],13858.00
+2018,2018-07-01,Canada,Personal and household goods repair and maintenance [8114],11826.00
+2018,2018-08-01,Canada,Seafood product preparation and packaging [3117],27958.00
+2018,2018-08-01,Canada,Textile and fabric finishing and fabric coating [3133],1843.00
+2018,2018-08-01,Canada,"Log, wood chips, and other wood products merchant wholesalers [4186]",605.00
+2018,2018-10-01,Canada,Other motor vehicle dealers [4412],23870.00
+2018,2018-10-01,Canada,Home furnishings stores [4422],35451.00
+2018,2018-11-01,Canada,Other specialty trade contractors [2389],123115.00
+2018,2018-11-01,Canada,Used merchandise stores [4533],22704.00
+2018,2018-12-01,Canada,Forging and stamping [3321],6492.00
+2018,2018-12-01,Canada,New motor vehicle parts and accessories merchant wholesalers [4152],37428.00
+2018,2018-12-01,Canada,Electronic shopping and mail-order houses [4541],17898.00
+2018,2018-12-01,Canada,Interurban and rural bus transportation [4852],3900.00
+2021,2021-02-01,Canada,Logging [1133],24535.00
+2021,2021-02-01,Canada,Other general-purpose machinery manufacturing [3339],30639.00
+2021,2021-02-01,Canada,"Log, wood chips, and other wood products merchant wholesalers [4186]",504.00
+2021,2021-02-01,Canada,Air transportation [481],58971.00
+2021,2021-02-01,Canada,Facilities support services [5612],14407.00
+2021,2021-03-01,Canada,Construction [23],964840.00
+2021,2021-03-01,Canada,Leather and hide tanning and finishing [3161],220.00
+2021,2021-03-01,Canada,Non-ferrous metal (except aluminum) production and processing [3314],14076.00
+2021,2021-04-01,Canada,Residential building construction [2361],145984.00
+2021,2021-04-01,Canada,"Fibre, yarn and thread mills [3131]",701.00
+2021,2021-04-01,Canada,Pharmaceutical and medicine manufacturing [3254],31536.00
+2021,2021-04-01,Canada,"Electrical equipment, appliance and component manufacturing [335]",36938.00
+2021,2021-05-01,Canada,Metal service centres [4162],19051.00
+2021,2021-05-01,Canada,Non-depository credit intermediation [5222],36266.00
+2021,2021-06-01,Canada,"Mining, quarrying, and oil and gas extraction [21]",191582.00
+2021,2021-06-01,Canada,Hardware manufacturing [3325],5842.00
+2021,2021-06-01,Canada,School and employee bus transportation [4854],35724.00
+2021,2021-07-01,Canada,Fabric mills [3132],3700.00
+2021,2021-08-01,Canada,Motor vehicle body and trailer manufacturing [3362],15874.00
+2021,2021-08-01,Canada,"Promoters (presenters) of performing arts, sports and similar events [7113]",18344.00
+2021,2021-09-01,Canada,"Warehouse clubs, Supercentres and other general merchandise retailers [4552]",nan
+2018,2018-04-01,Quebec,Community colleges and C.E.G.E.P.s [6112],35387.00
+2018,2018-04-01,Quebec,"Business, professional, labour and other membership organizations [8139]",20519.00
+2018,2018-05-01,Quebec,Support activities for road transportation [4884],9327.00
+2018,2018-05-01,Quebec,Couriers [4921],7541.00
+2018,2018-05-01,Quebec,Insurance carriers and related activities [524],55029.00
+2018,2018-05-01,Quebec,Unclassified businesses [00],72731.00
+2018,2018-06-01,Quebec,Other heavy and civil engineering construction [2379],4951.00
+2018,2018-07-01,Quebec,Other textile product mills [3149],1979.00
+2018,2018-07-01,Quebec,Hardware manufacturing [3325],957.00
+2018,2018-07-01,Quebec,Motor vehicle body and trailer manufacturing [3362],5602.00
+2018,2018-08-01,Quebec,Metal ore mining [2122],11953.00
+2018,2018-09-01,Quebec,Household and institutional furniture and kitchen cabinet manufacturing [3371],16274.00
+2018,2018-09-01,Quebec,Hospitals [622],165908.00
+2018,2018-10-01,Quebec,Construction [23],217373.00
+2018,2018-10-01,Quebec,Book stores and news dealers [4513],4040.00
+2018,2018-10-01,Quebec,"Clothing, clothing accessories, shoes, jewelry, luggage and leather goods retailers [458]",59047.00
+2018,2018-10-01,Quebec,"Scenic and sightseeing transportation, land [4871]",nan
+2018,2018-10-01,Quebec,Drinking places (alcoholic beverages) [7224],14111.00
+2018,2018-11-01,Quebec,"Educational services [61,611]",340734.00
+2019,2019-03-01,Canada,Pharmaceutical and medicine manufacturing [3254],31290.00
+2019,2019-03-01,Canada,Hardware manufacturing [3325],6382.00
+2019,2019-04-01,Canada,Interurban and rural bus transportation [4852],3665.00
