@@ -23,7 +23,7 @@ Statistics Canada CSVs
    S3 (curated/)                ← Final Parquet ready for dbt transformation
         │
         ▼
-   Databricks (Delta Tables)    ← Curated Parquet registered as managed Delta tables via Hive Metastore
+   Databricks (Delta Tables)    ← Curated Parquet registered as managed Delta tables in Unity Catalog
         │
         ▼
    dbt Core(dbt-databricks)     ← Mart models, data tests, documentation                                            ← Currently here
@@ -58,7 +58,7 @@ Statistics Canada CSVs
 │
 ├── databricks/
 │   ├── transform_vacancy_metrics.ipynb  <- Schema work + null/dupe check + standardization + joins + output to S3 (curated)
-│   ├── register_curated_tables.ipynb    <- Registers curated Parquet as Delta
+│   ├── register_curated_tables.ipynb    <- Registers curated Parquet as Delta tables in Unity Catalog
 │   └── ml_vacancy_forecast.ipynb        <- XGBoost forecasting + MLflow tracking (To be added)
 |
 ├── dbt/
@@ -137,7 +137,7 @@ Output is written to `s3://your-bucket-name/curated/`.
 #### register_curated_tables.ipynb
 Import `databricks/register_curated_tables.ipynb` into Databricks.
 Update the S3 paths in cell 1 and run it.
-Output are saved to the Hive Metastore of Databricks.
+Output are saved to the Unity Catalog of Databricks.
 
 ### 4. Run dbt Models
 ⏳ Coming soon - see Pipeline Architecture for current progress
@@ -151,7 +151,7 @@ Output are saved to the Hive Metastore of Databricks.
 |-----------|-------------------------------------|----------------------------------------------------------------| 
 | 🥉 Bronze | `s3://bucket/raw/`                  | Raw CSV files as ingested from Statistics Canada              |
 | 🥈 Silver | `s3://bucket/processed/ & /curated/`| Cleaned, typed, joined Parquet, output of Glue and Databricks |
-| 🥇 Gold   | Databricks Delta Tables + dbt       | Business metrics, mart models, tested and documented          |
+| 🥇 Gold   | `workspace.canada_labour_market`    | Business metrics, mart models, tested and documented          |
 
 ---
 
