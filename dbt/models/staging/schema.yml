@@ -13,6 +13,35 @@ models:
         tests:
           - not_null
 
+      - name: job_vacancies
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                inclusive: true
+
+
+      - name: job_vacancy_rate
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                inclusive: true
+
+      - name: payroll_employees
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                inclusive: true
+      
+      - name: total_employment
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                inclusive: true
+
   - name: stg_quarterly_vacancies
     columns:
       - name: date_parsed
@@ -28,6 +57,41 @@ models:
         tests:
           - not_null
 
+      - name: job_vacancies
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                inclusive: true
+
+      - name: job_vacancy_rate
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                inclusive: true
+
+      - name: avg_offered_hourly_wage
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                inclusive: true
+
+      - name: payroll_employees
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                inclusive: true
+      
+      - name: total_employment
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                inclusive: true
+
   - name: stg_naics_employed
     columns:
       - name: date_parsed
@@ -42,3 +106,9 @@ models:
       - name: year
         tests:
           - not_null
+      - name: total_employment
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                inclusive: true
