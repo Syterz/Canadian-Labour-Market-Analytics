@@ -2,7 +2,7 @@ name: 'canada_labour_market_analytics_dbt'
 version: '1.0.0'
 
 # Configures which "profile" dbt uses for this project.
-profile: 'canada_labour_market_analytics_dbt'
+profile: 'canada_labour_market_analytics'
 
 # These configurations specify where dbt should look for different types of files.
 model-paths: ["models"]
@@ -20,6 +20,7 @@ clean-targets:         # directories to be removed by `dbt clean`
 # Configuring models
 models:
   canada_labour_market_analytics_dbt:
+    +materialized: view
     staging:
       +materialized: view
     marts:
