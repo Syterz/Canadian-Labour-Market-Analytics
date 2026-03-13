@@ -39,3 +39,6 @@ models:
       - name: naics
         tests:
           - not_null
+      - name: year
+        tests:
+          - not_null
