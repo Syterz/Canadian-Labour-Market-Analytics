@@ -10,6 +10,7 @@ renamed as (
         naics,
         job_vacancies,
         job_vacancy_rate,
+        payroll_employees,
         avg_offered_hourly_wage,
         total_employment,
         (job_vacancies / nullif(total_employment, 0)) * 1000 as vacancies_per_1000
