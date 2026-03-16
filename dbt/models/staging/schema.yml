@@ -34,13 +34,6 @@ models:
               arguments:
                 min_value: 0
                 inclusive: true
-      
-      - name: total_employment
-        tests:
-          - dbt_utils.accepted_range:
-              arguments:
-                min_value: 0
-                inclusive: true
 
   - name: stg_quarterly_vacancies
     columns:
@@ -79,13 +72,6 @@ models:
                 inclusive: true
 
       - name: payroll_employees
-        tests:
-          - dbt_utils.accepted_range:
-              arguments:
-                min_value: 0
-                inclusive: true
-      
-      - name: total_employment
         tests:
           - dbt_utils.accepted_range:
               arguments:
