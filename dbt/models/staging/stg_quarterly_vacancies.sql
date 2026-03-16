@@ -12,8 +12,7 @@ renamed as (
         job_vacancy_rate,
         payroll_employees,
         avg_offered_hourly_wage,
-        total_employment,
-        (job_vacancies / nullif(total_employment, 0)) * 1000 as vacancies_per_1000
+        (job_vacancies / nullif(payroll_employees, 0)) * 1000 as vacancies_per_1000
     from source
     where date_parsed is not null
 )
