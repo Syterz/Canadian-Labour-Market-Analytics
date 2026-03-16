@@ -16,8 +16,7 @@ Statistics Canada CSVs
    S3 (processed/)              ← Intermediate clean Parquet
         │
         ▼
-   Databricks                   ← Schema normalization, null and dupe checks, NAICS code standardization, 
-        │                          date granularity resolution, employment/vacancy join
+   Databricks                   ← Null and dupe checks, schema validation, pivot from long to wide format
         │  
         ▼
    S3 (curated/)                ← Final Parquet ready for dbt transformation
@@ -44,9 +43,37 @@ Statistics Canada CSVs
 ```
 
 ## Key Metrics Produced (Planned)
-- **Vacancy Rate**: Job vacancies per 1,000 employed workers by province and sector
-- **Tech Job Concentration**: Share of tech-sector vacancies by region
-- **YoY Trends**: Year-over-year change in vacancy rates by NOC category
+**Monthly (Provincial & Territory Level)**
+*Source metrics (cleaned and structured from Statistics Canada):*
+- Job vacancies
+- Job vacancy rate
+- Payroll employees
+
+*Derived Metrics:*
+- Vacancy rate per 1,000 employed workers
+- Month-over-month and year-over-year vacancy trend
+
+**Quarterly (Provincial & Territory + Sector Level)**
+*Source metrics (cleaned and structured from Statistics Canada):*
+- Job vacancies by NAICS sector
+- Job vacancy rate by sector
+- Payroll employees by sector
+- Average offered hourly wage by sector
+
+*Derived metrics:*
+- Wage YoY growth by sector
+- Highest demand sectors per province & territory per quarter
+- Sustained high demand sectors (quarters above vacancy threshold)
+- Foreign accessibility tier (composite of vacancy rate, wage, and sustained demand)
+
+**NAICS Employment (Provincial & Territory + Sub-sector Level)**
+*Source metrics (cleaned and structured from Statistics Canada):*
+- Employment by NAICS sub-sector
+
+*Derived metrics:*
+- Employment trends by sub-sector 
+- Tech employment concentration
+- Fastest growing sub-sectors
 
 ---
 
@@ -57,7 +84,7 @@ Statistics Canada CSVs
 │   └── glue_ETL_job.py       # PySpark job: raw CSV → cleaned Parquet
 │
 ├── databricks/
-│   ├── transform_vacancy_metrics.ipynb  <- Schema work + null/dupe check + standardization + joins + output to S3 (curated)
+│   ├── transform_vacancy_metrics.ipynb  <- Schema work + null/dupe check + pivot + output to S3 (curated)
 │   ├── register_curated_tables.ipynb    <- Registers curated Parquet as Delta tables in Unity Catalog
 │   └── ml_vacancy_forecast.ipynb        <- XGBoost forecasting + MLflow tracking (To be added)
 |
@@ -70,10 +97,13 @@ Statistics Canada CSVs
 │   │   │   ├── stg_naics_employed.sql       # employment figures by NAICS industry
 │   │   │   └── stg_quarterly_vacancies.sql  # quarterly vacancies + wage data + vacancies per 1,000 by NAICS
 │   │   │
-│   │   ├── intermediate/
-│   │   │   └── int_vacancies_by_region.sql (To be added)
 │   │   └── marts/
-│   │       └── mart_vacancy_rates.sql (To be added)
+│   │       ├── schema.yml                        # column-level tests for mart monthly model
+│   │       ├── mart_monthly_labour_metrics.sql   # calculation of YoY change, MoM to be added
+│   │       ├── mart_quarterly_sector_metrics.sql    # sector vacancy rates, wages, demand ranking (To be added)
+│   │       └── mart_naics_employment_trends.sql     # sub-sector employment trends, tech concentration (To be added)
+│   │
+│   │
 │   ├── tests/
 │   └── dbt_project.yml
 │
@@ -155,7 +185,7 @@ Output are saved to the Unity Catalog of Databricks.
 |   Layer   |      Location                       |             Description                                        |
 |-----------|-------------------------------------|----------------------------------------------------------------| 
 | 🥉 Bronze | `s3://bucket/raw/`                  | Raw CSV files as ingested from Statistics Canada              |
-| 🥈 Silver | `s3://bucket/processed/ & /curated/`| Cleaned, typed, joined Parquet, output of Glue and Databricks |
+| 🥈 Silver | `s3://bucket/processed/ & /curated/`| Cleaned, typed Parquet, output of Glue and Databricks |
 | 🥇 Gold   | `workspace.canada_labour_market`    | Business metrics, mart models, tested and documented          |
 
 ---
@@ -175,7 +205,9 @@ Data is publicly available under the Statistics Canada Open Licence.
 **Why Glue for ingestion and Databricks for transformation?**
 Glue handled the ingestion layer: column selection, type casting, string normalization, date filtering, and writing partitioned Parquet to S3. Partitioning by Year and GEO at this stage makes downstream reads faster by pruning irrelevant partitions before any transformation begins.
 
-Databricks handled the heavier transformation work: normalizing NAICS industry codes across datasets, resolving date granularity mismatches between monthly and quarterly sources, and joining employment figures to vacancy data. The notebook environment suited this stage because the join logic and NAICS name standardization required iterative validation: null checks, duplicate detection, and left-anti joins, to identify unmatched industries before the transformations were stable enough to be committed as repeatable code.
+Databricks handled the transformation and validation layer: null and duplicate checks, schema validation, and pivoting the monthly and quarterly vacancy datasets from long to wide format for downstream consumption. The notebook environment suited this stage because the pivot logic and data quality checks required iterative validation before the transformations were stable enough to be committed as repeatable code. 
+
+An initial approach joined NAICS employed (SEPH) data with vacancy datasets to derive total_employment as a denominator for vacancy metrics. Investigation revealed that 22% of quarterly rows showed payroll_employees exceeding total_employment due to methodological differences between JVWS and SEPH; different reference periods, employee definitions, and calibration approaches. The join was removed in favour of using payroll_employees directly from JVWS, which is the more appropriate and internally consistent denominator. NAICS employed data is retained as a standalone table for monthly employment trend analysis by sector.
 
 **Why dbt on Databricks instead of a separate warehouse?**
 Running dbt directly on Databricks avoids an unnecessary data movement step into a separate warehouse. The curated Delta tables are already query-ready, and dbt-databricks connects natively to the cluster, keeping the stack unified and reducing infrastructure overhead.
