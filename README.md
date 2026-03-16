@@ -99,7 +99,7 @@ Statistics Canada CSVs
 │   │   │
 │   │   └── marts/
 │   │       ├── schema.yml                        # column-level tests for mart monthly model
-│   │       ├── mart_monthly_labour_metrics.sql   # calculation of YoY change, MoM to be added
+│   │       ├── mart_monthly_labour_metrics.sql   # calculation of YoY and MoM change of vacancies per 1,000
 │   │       ├── mart_quarterly_sector_metrics.sql    # sector vacancy rates, wages, demand ranking (To be added)
 │   │       └── mart_naics_employment_trends.sql     # sub-sector employment trends, tech concentration (To be added)
 │   │
