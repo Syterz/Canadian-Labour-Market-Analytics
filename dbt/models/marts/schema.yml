@@ -14,14 +14,13 @@ models:
       - name: vacancies_per_1000
         tests:
           - dbt_utils.accepted_range:
-                arguments:
+              arguments:
                 min_value: 0
                 inclusive: true
-
       - name: total_job_vacancies
         tests:
           - dbt_utils.accepted_range:
-                arguments:
+              arguments:
                 min_value: 0
                 inclusive: true
   # mom_change_pct intentionally nullable — null for first 4 month per province
@@ -58,3 +57,36 @@ models:
                   - 'High Demand and Sustained, Below Wage Threshold'
                   - 'Above Average Demand, Below Wage Threshold'
                   - 'Low'
+      # foreign_accessibility_tier — composite of LMIA wage threshold, p75/p50 vacancy rate,
+      # and pct_quarters_above_threshold_2yr >= 75%. See Design Decisions in README for full methodology.
+      # job_vacancy_rate, avg_offered_hourly_wage intentionally, pct_quarters_above_threshold_2yr nullable due to data gaps
+
+
+  - name: mart_naics_employment_trends
+    columns:
+      - name: date_parsed
+        tests:
+          - not_null
+      - name: geo
+        tests:
+          - not_null
+      - name: naics
+        tests:
+          - not_null
+      - name: year
+        tests:
+          - not_null
+      - name: total_employment
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                inclusive: true
+      - name: data_digital_employment_concentration_pct
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                inclusive: true
+      # employment_yoy_growth_pct & prev_year_employment intentionally nullable — null for first 12 months
+      # growth_rank intentionally nullable — null when employment_yoy_growth_pct is null
