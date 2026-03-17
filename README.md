@@ -62,7 +62,7 @@ Statistics Canada CSVs
 
 *Derived metrics:*
 - Wage YoY growth by sector
-- Highest demand sectors per province & territory per quarter
+- Highest demand sectors per national, province & territory per quarter
 - Sustained high demand sectors (quarters above vacancy threshold)
 - Foreign accessibility tier (composite of vacancy rate, wage, and sustained demand)
 
@@ -98,11 +98,13 @@ Statistics Canada CSVs
 │   │   │   └── stg_quarterly_vacancies.sql  # quarterly vacancies + wage data + vacancies per 1,000 by NAICS
 │   │   │
 │   │   └── marts/
-│   │       ├── schema.yml                        # column-level tests for mart monthly model
+│   │       ├── schema.yml                        # column-level tests for mart models
 │   │       ├── mart_monthly_labour_metrics.sql   # calculation of YoY and MoM change of vacancies per 1,000
-│   │       ├── mart_quarterly_sector_metrics.sql    # sector vacancy rates, wages, demand ranking (To be added)
+│   │       ├── mart_quarterly_sector_metrics.sql    # sector vacancy rates, wages, demand ranking
 │   │       └── mart_naics_employment_trends.sql     # sub-sector employment trends, tech concentration (To be added)
-│   │
+│   |
+│   ├── seeds/
+│   │   └── provincial_lmia_wage_thresholds.csv   # Working visa wage threshold of each province and territories [Canada Wage Threshold] (https://www.canada.ca/en/employment-social-development/services/foreign-workers/median-wage.html)
 │   │
 │   ├── tests/
 │   └── dbt_project.yml
@@ -211,6 +213,15 @@ An initial approach joined NAICS employed (SEPH) data with vacancy datasets to d
 
 **Why dbt on Databricks instead of a separate warehouse?**
 Running dbt directly on Databricks avoids an unnecessary data movement step into a separate warehouse. The curated Delta tables are already query-ready, and dbt-databricks connects natively to the cluster, keeping the stack unified and reducing infrastructure overhead.
+
+**Foreign Accessibility Tier methodology**
+The foreign accessibility tier is a composite metric designed to identify NAICS sectors most accessible to foreign workers seeking Canadian employment (focus on high wage stream). It combines three signals:
+
+- **Wage eligibility** — whether the sector's average offered hourly wage meets the provincial LMIA high-wage stream threshold (provincial median wage + 20%), sourced directly from Employment and Social Development Canada (ESDC)
+- **Vacancy demand** — whether the sector's vacancy rate is above the provincial 75th or 50th percentile for that year, using a data-driven threshold rather than an arbitrary cutoff
+- **Sustained demand** — whether the sector has been above the p75 vacancy rate for at least 75% of quarters in the last 2 years, indicating structural rather than temporary labour shortage
+
+**Important caveat:** Canadian immigration eligibility is formally determined by NOC occupation codes, not NAICS industry codes. This metric uses NAICS-based vacancy and wage data as a proxy. A sector meeting all three conditions is likely to have roles accessible to foreign workers, but individual job eligibility depends on specific NOC codes, employer LMIA applications, and provincial nominee program criteria.
 
 ---
 
