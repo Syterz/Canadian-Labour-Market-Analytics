@@ -26,3 +26,35 @@ models:
                 inclusive: true
   # mom_change_pct intentionally nullable — null for first 4 month per province
   # yoy_change_pct intentionally nullable — null for first 12 months per province
+
+
+  - name: mart_quarterly_sector_metrics
+    columns:
+      - name: date_parsed
+        tests:
+          - not_null
+      - name: geo
+        tests:
+          - not_null
+      - name: naics
+        tests:
+          - not_null
+      - name: year
+        tests:
+          - not_null
+      - name: foreign_accessibility_tier
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: 
+                  - 'Insufficient Data'
+                  - 'High Demand and Sustained, No Wage Data'
+                  - 'Above Average Demand, No Wage Data'
+                  - 'Wage Eligible, No Vacancy Data'
+                  - 'HIGH, Wage Eligible, High Demand and Sustain'
+                  - 'Wage Eligible, High Demand'
+                  - 'Wage Eligible'
+                  - 'High Demand and Sustained, Below Wage Threshold'
+                  - 'Above Average Demand, Below Wage Threshold'
+                  - 'Low'
