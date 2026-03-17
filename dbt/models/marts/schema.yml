@@ -1,5 +1,4 @@
 version: 2
-
 models:
   - name: mart_monthly_labour_metrics
     columns:
@@ -15,9 +14,15 @@ models:
       - name: vacancies_per_1000
         tests:
           - dbt_utils.accepted_range:
-              arguments:
+                arguments:
                 min_value: 0
                 inclusive: true
-      # vacancies_per_1000 intentionally nullable — nulls represent data gaps
-      # yoy_change_pct intentionally nullable — null for first 12 months and data gaps
-      # prev_year_vacancies_per_1000 intentionally nullable — same reason
+
+      - name: total_job_vacancies
+        tests:
+          - dbt_utils.accepted_range:
+                arguments:
+                min_value: 0
+                inclusive: true
+  # mom_change_pct intentionally nullable — null for first 4 month per province
+  # yoy_change_pct intentionally nullable — null for first 12 months per province
