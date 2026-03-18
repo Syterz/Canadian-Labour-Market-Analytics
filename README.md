@@ -25,10 +25,10 @@ Statistics Canada CSVs
    Databricks (Delta Tables)    ← Curated Parquet registered as managed Delta tables in Unity Catalog
         │
         ▼
-   dbt Core(dbt-databricks)     ← Mart models, data tests, documentation                                            ← Currently here
+   dbt Core(dbt-databricks)     ← Mart models, data tests, documentation                                            
         │
         ▼
-   Databricks ML (XGBoost)      ← Time series forecasting of vacancy rates, experiment tracking,                    ← ⏳ (planned)
+   Databricks ML (XGBoost)      ← Time series forecasting of vacancy rates, experiment tracking,                    ← 🔨 In Progress
    + MLflow                        model versioning
         │
         ▼
@@ -72,7 +72,7 @@ Statistics Canada CSVs
 
 *Derived metrics:*
 - Employment trends by sub-sector 
-- Tech employment concentration
+- Data digital employment concentration
 - Fastest growing sub-sectors
 
 ---
@@ -101,10 +101,10 @@ Statistics Canada CSVs
 │   │       ├── schema.yml                        # column-level tests for mart models
 │   │       ├── mart_monthly_labour_metrics.sql   # calculation of YoY and MoM change of vacancies per 1,000
 │   │       ├── mart_quarterly_sector_metrics.sql    # sector vacancy rates, wages, demand ranking
-│   │       └── mart_naics_employment_trends.sql     # sub-sector employment trends, tech concentration (To be added)
+│   │       └── mart_naics_employment_trends.sql     # sub-sector employment trends, data digital concentration
 │   |
 │   ├── seeds/
-│   │   └── provincial_lmia_wage_thresholds.csv   # Working visa wage threshold of each province and territories [Canada Wage Threshold] (https://www.canada.ca/en/employment-social-development/services/foreign-workers/median-wage.html)
+│   │   └── provincial_lmia_wage_thresholds.csv   # Working visa wage threshold of each province and territories  - source: ESDC Canada
 │   │
 │   ├── tests/
 │   └── dbt_project.yml
@@ -133,7 +133,7 @@ Statistics Canada CSVs
 │
 ├── .github/
 │   └── workflows/
-│       └── dbt_test.yml             # CI: runs dbt test on PR (To be added)
+│       └── dbt_test.yml             # CI: runs dbt test on PR        ← 🔨 In Progress
 │
 ├── .gitignore
 ├── requirements.txt
@@ -177,7 +177,13 @@ Update the S3 paths in cell 1 and run it.
 Output are saved to the Unity Catalog of Databricks.
 
 ### 4. Run dbt Models
-⏳ Coming soon - see Pipeline Architecture for current progress
+```bash
+cd dbt
+dbt deps
+dbt seed
+dbt run
+dbt test
+```
 
 
 ---
@@ -232,14 +238,14 @@ The foreign accessibility tier is a composite metric designed to identify NAICS 
 - Data modelling (Medallion architecture: Bronze → Silver → Gold)
 - Infrastructure basics (IAM roles, Secrets Manager for credentials)
 - Data quality & validation (null checks, deduplication, schema assertions, pre-export validation)
+- Analytics engineering (dbt-databricks, staging models, mart models, data tests)
 
 **In Progress**
-- Analytics engineering (dbt-databricks, staging models, mart models, data tests)
+- CI/CD (GitHub Actions running dbt tests on PR)
 
 **Planned**
 - Machine learning (XGBoost time series forecasting, MLflow experiment tracking)
 - Orchestration (Apache Airflow end-to-end pipeline scheduling)
-- CI/CD (GitHub Actions running dbt tests on PR)
 - Dashboard development (Streamlit)
 
 ---
