@@ -5,6 +5,7 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   dbt-test:
@@ -20,27 +21,37 @@ jobs:
       - name: Install dbt
         run: pip install dbt-databricks
 
+      - name: Create dbt profiles directory
+        run: mkdir -p ~/.dbt
+
+      - name: Create profiles.yml
+        run: |
+          cat > ~/.dbt/profiles.yml << EOF
+          canada_labour_market_analytics:
+            outputs:
+              dev:
+                type: databricks
+                host: ${{ secrets.DATABRICKS_HOST }}
+                http_path: ${{ secrets.DATABRICKS_HTTP_PATH }}
+                token: ${{ secrets.DATABRICKS_TOKEN }}
+                schema: canada_labour_market
+                catalog: workspace
+                threads: 1
+            target: dev
+          EOF
+
       - name: Install dbt packages
         working-directory: dbt
         run: dbt deps
 
       - name: Run dbt seed
         working-directory: dbt
-        env:
-          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: dbt seed
 
       - name: Run dbt models
         working-directory: dbt
-        env:
-          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: dbt run
 
       - name: Run dbt tests
         working-directory: dbt
-        env:
-          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: dbt test
