@@ -86,7 +86,7 @@ Statistics Canada CSVs
 ├── databricks/
 │   ├── transform_vacancy_metrics.ipynb  <- Schema work + null/dupe check + pivot + output to S3 (curated)
 │   ├── register_curated_tables.ipynb    <- Registers curated Parquet as Delta tables in Unity Catalog
-│   └── ml_vacancy_forecast.ipynb        <- XGBoost forecasting + MLflow tracking (To be added)
+│   └── ml_vacancy_employed_forecast.ipynb        <- XGBoost forecasting + MLflow tracking                              ← 🔨 In Progress
 |
 ├── dbt/
 │   ├── models/
@@ -129,11 +129,11 @@ Statistics Canada CSVs
 │       │    └── quarterly_curated_sample.csv     
 │       │
 │       └── predicted/    # 100-row samples of predicted data
-│            └── prediction_sample.csv (To be added)
+│            └── prediction_sample.csv  (To be added)
 │
 ├── .github/
 │   └── workflows/
-│       └── dbt_test.yml             # CI: runs dbt test on PR        ← 🔨 In Progress
+│       └── dbt_test.yml             # CI: runs dbt test on PR        
 │
 ├── .gitignore
 ├── requirements.txt
@@ -184,6 +184,17 @@ dbt seed
 dbt run
 dbt test
 ```
+
+### 5. Github Actions CI/CD
+The pipeline includes automated dbt testing on every push to `main`. To enable it:
+1. Add the following secrets to your GitHub repository under Settings → Secrets → Actions:
+   - `DATABRICKS_HOST` — your Databricks workspace URL
+   - `DATABRICKS_TOKEN` — your Databricks personal access token
+   - `DATABRICKS_HTTP_PATH` — your SQL warehouse HTTP path
+2. Push to `main` to trigger the workflow automatically
+
+### 6. Databricks ML (XGBoost) + MLflow
+⏳ Coming soon - see Pipeline Architecture for current progress
 
 
 ---
@@ -239,12 +250,12 @@ The foreign accessibility tier is a composite metric designed to identify NAICS 
 - Infrastructure basics (IAM roles, Secrets Manager for credentials)
 - Data quality & validation (null checks, deduplication, schema assertions, pre-export validation)
 - Analytics engineering (dbt-databricks, staging models, mart models, data tests)
-
-**In Progress**
 - CI/CD (GitHub Actions running dbt tests on PR)
 
-**Planned**
+**In Progress**
 - Machine learning (XGBoost time series forecasting, MLflow experiment tracking)
+
+**Planned**
 - Orchestration (Apache Airflow end-to-end pipeline scheduling)
 - Dashboard development (Streamlit)
 
