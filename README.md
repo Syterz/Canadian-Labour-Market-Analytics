@@ -42,8 +42,10 @@ Statistics Canada CSVs
                                    pipeline dependency management
 ```
 
-## Key Metrics Produced (Planned)
+## Key Metrics Produced
+
 **Monthly (Provincial & Territory Level)**
+
 *Source metrics (cleaned and structured from Statistics Canada):*
 - Job vacancies
 - Job vacancy rate
@@ -54,6 +56,7 @@ Statistics Canada CSVs
 - Month-over-month and year-over-year vacancy trend
 
 **Quarterly (Provincial & Territory + Sector Level)**
+
 *Source metrics (cleaned and structured from Statistics Canada):*
 - Job vacancies by NAICS sector
 - Job vacancy rate by sector
@@ -67,6 +70,7 @@ Statistics Canada CSVs
 - Foreign accessibility tier (composite of vacancy rate, wage, and sustained demand)
 
 **NAICS Employment (Provincial & Territory + Sub-sector Level)**
+
 *Source metrics (cleaned and structured from Statistics Canada):*
 - Employment by NAICS sub-sector
 
@@ -84,8 +88,8 @@ Statistics Canada CSVs
 │   └── glue_ETL_job.py       # PySpark job: raw CSV → cleaned Parquet
 │
 ├── databricks/
-│   ├── transform_vacancy_metrics.ipynb  <- Schema work + null/dupe check + pivot + output to S3 (curated)
-│   ├── register_curated_tables.ipynb    <- Registers curated Parquet as Delta tables in Unity Catalog
+│   ├── transform_vacancy_metrics.ipynb           <- Schema work + null/dupe check + pivot + output to S3 (curated)
+│   ├── register_curated_tables.ipynb             <- Registers curated Parquet as Delta tables in Unity Catalog
 │   └── ml_vacancy_employed_forecast.ipynb        <- XGBoost forecasting + MLflow tracking                              ← 🔨 In Progress
 |
 ├── dbt/
@@ -98,10 +102,10 @@ Statistics Canada CSVs
 │   │   │   └── stg_quarterly_vacancies.sql  # quarterly vacancies + wage data + vacancies per 1,000 by NAICS
 │   │   │
 │   │   └── marts/
-│   │       ├── schema.yml                        # column-level tests for mart models
-│   │       ├── mart_monthly_labour_metrics.sql   # calculation of YoY and MoM change of vacancies per 1,000
-│   │       ├── mart_quarterly_sector_metrics.sql    # sector vacancy rates, wages, demand ranking
-│   │       └── mart_naics_employment_trends.sql     # sub-sector employment trends, data digital concentration
+│   │       ├── schema.yml                             # column-level tests for mart models
+│   │       ├── mart_monthly_labour_metrics.sql        # calculation of YoY and MoM change of vacancies per 1,000
+│   │       ├── mart_quarterly_sector_metrics.sql      # sector vacancy rates, wages, demand ranking
+│   │       └── mart_naics_employment_trends.sql       # sub-sector employment trends, data digital concentration
 │   |
 │   ├── seeds/
 │   │   └── provincial_lmia_wage_thresholds.csv   # Working visa wage threshold of each province and territories  - source: ESDC Canada
@@ -123,7 +127,7 @@ Statistics Canada CSVs
 │       │   ├── monthly_vacancies_sample.csv     
 │       │   └── quarterly_vacancies_sample.csv  
 │       │
-│       └── curated/      # 100-row samples of curated data
+│       ├── curated/      # 100-row samples of curated data
 │       │    ├── monthly_curated_sample.csv       
 │       │    ├── naics_curated_sample.csv         
 │       │    └── quarterly_curated_sample.csv     
