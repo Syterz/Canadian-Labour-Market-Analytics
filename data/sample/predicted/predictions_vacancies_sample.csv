@@ -1,0 +1,101 @@
+date_parsed,geo,naics,predicted_vacancies_per_1000,model,forecast_horizon_quarters
+2025-10-01T00:00:00.000Z,Alberta,Accommodation and food services [72],52.75752,xgboost,1
+2026-01-01T00:00:00.000Z,Alberta,Accommodation and food services [72],49.529934,xgboost,2
+2026-04-01T00:00:00.000Z,Alberta,Accommodation and food services [72],62.477074,xgboost,3
+2026-07-01T00:00:00.000Z,Alberta,Accommodation and food services [72],49.159935,xgboost,4
+2025-10-01T00:00:00.000Z,Alberta,Wholesale trade [41],25.971502,xgboost,1
+2026-01-01T00:00:00.000Z,Alberta,Wholesale trade [41],25.43159,xgboost,2
+2026-04-01T00:00:00.000Z,Alberta,Wholesale trade [41],27.810135,xgboost,3
+2026-07-01T00:00:00.000Z,Alberta,Wholesale trade [41],26.655277,xgboost,4
+2025-10-01T00:00:00.000Z,Alberta,Utilities [22],10.224597,xgboost,1
+2026-01-01T00:00:00.000Z,Alberta,Utilities [22],9.869253,xgboost,2
+2026-04-01T00:00:00.000Z,Alberta,Utilities [22],10.877525,xgboost,3
+2026-07-01T00:00:00.000Z,Alberta,Utilities [22],10.387136,xgboost,4
+2025-10-01T00:00:00.000Z,Alberta,Transportation and warehousing [48-49],32.81474,xgboost,1
+2026-01-01T00:00:00.000Z,Alberta,Transportation and warehousing [48-49],30.097538,xgboost,2
+2026-04-01T00:00:00.000Z,Alberta,Transportation and warehousing [48-49],32.093246,xgboost,3
+2026-07-01T00:00:00.000Z,Alberta,Transportation and warehousing [48-49],30.233927,xgboost,4
+2025-10-01T00:00:00.000Z,Alberta,"Total, all industries",27.038189,xgboost,1
+2026-01-01T00:00:00.000Z,Alberta,"Total, all industries",27.077314,xgboost,2
+2026-04-01T00:00:00.000Z,Alberta,"Total, all industries",29.799105,xgboost,3
+2026-07-01T00:00:00.000Z,Alberta,"Total, all industries",29.193224,xgboost,4
+2025-10-01T00:00:00.000Z,Alberta,Retail trade [44-45],28.350084,xgboost,1
+2026-01-01T00:00:00.000Z,Alberta,Retail trade [44-45],25.429834,xgboost,2
+2026-04-01T00:00:00.000Z,Alberta,Retail trade [44-45],29.789452,xgboost,3
+2026-07-01T00:00:00.000Z,Alberta,Retail trade [44-45],30.376905,xgboost,4
+2025-10-01T00:00:00.000Z,Alberta,Public administration [91],20.632883,xgboost,1
+2026-01-01T00:00:00.000Z,Alberta,Public administration [91],21.390139,xgboost,2
+2026-04-01T00:00:00.000Z,Alberta,Public administration [91],21.516777,xgboost,3
+2026-07-01T00:00:00.000Z,Alberta,Public administration [91],18.828562,xgboost,4
+2025-10-01T00:00:00.000Z,Alberta,"Professional, scientific and technical services [54]",26.743069,xgboost,1
+2026-01-01T00:00:00.000Z,Alberta,"Professional, scientific and technical services [54]",27.277958,xgboost,2
+2026-04-01T00:00:00.000Z,Alberta,"Professional, scientific and technical services [54]",28.970482,xgboost,3
+2026-07-01T00:00:00.000Z,Alberta,"Professional, scientific and technical services [54]",27.446735,xgboost,4
+2025-10-01T00:00:00.000Z,Alberta,Other services (except public administration) [81],43.315094,xgboost,1
+2026-01-01T00:00:00.000Z,Alberta,Other services (except public administration) [81],39.073277,xgboost,2
+2026-04-01T00:00:00.000Z,Alberta,Other services (except public administration) [81],45.534134,xgboost,3
+2026-07-01T00:00:00.000Z,Alberta,Other services (except public administration) [81],42.534943,xgboost,4
+2025-10-01T00:00:00.000Z,Alberta,"Mining, quarrying, and oil and gas extraction [21]",17.529991,xgboost,1
+2026-01-01T00:00:00.000Z,Alberta,"Mining, quarrying, and oil and gas extraction [21]",16.842089,xgboost,2
+2026-04-01T00:00:00.000Z,Alberta,"Mining, quarrying, and oil and gas extraction [21]",19.056902,xgboost,3
+2026-07-01T00:00:00.000Z,Alberta,"Mining, quarrying, and oil and gas extraction [21]",17.115011,xgboost,4
+2025-10-01T00:00:00.000Z,Alberta,Real estate and rental and leasing [53],27.223625,xgboost,1
+2026-01-01T00:00:00.000Z,Alberta,Real estate and rental and leasing [53],23.289816,xgboost,2
+2026-04-01T00:00:00.000Z,Alberta,Real estate and rental and leasing [53],27.865488,xgboost,3
+2026-07-01T00:00:00.000Z,Alberta,Real estate and rental and leasing [53],24.765938,xgboost,4
+2025-10-01T00:00:00.000Z,Alberta,Management of companies and enterprises [55],11.294002,xgboost,1
+2026-01-01T00:00:00.000Z,Alberta,Management of companies and enterprises [55],11.540446,xgboost,2
+2026-04-01T00:00:00.000Z,Alberta,Management of companies and enterprises [55],13.021522,xgboost,3
+2026-07-01T00:00:00.000Z,Alberta,Management of companies and enterprises [55],13.064348,xgboost,4
+2025-10-01T00:00:00.000Z,Alberta,Manufacturing [31-33],24.411766,xgboost,1
+2026-01-01T00:00:00.000Z,Alberta,Manufacturing [31-33],24.426023,xgboost,2
+2026-04-01T00:00:00.000Z,Alberta,Manufacturing [31-33],26.86058,xgboost,3
+2026-07-01T00:00:00.000Z,Alberta,Manufacturing [31-33],25.796396,xgboost,4
+2025-10-01T00:00:00.000Z,Alberta,"Agriculture, forestry, fishing and hunting [11]",21.92002,xgboost,1
+2026-01-01T00:00:00.000Z,Alberta,"Agriculture, forestry, fishing and hunting [11]",27.077374,xgboost,2
+2026-04-01T00:00:00.000Z,Alberta,"Agriculture, forestry, fishing and hunting [11]",35.39024,xgboost,3
+2026-07-01T00:00:00.000Z,Alberta,"Agriculture, forestry, fishing and hunting [11]",28.359756,xgboost,4
+2025-10-01T00:00:00.000Z,Alberta,"Arts, entertainment and recreation [71]",22.881865,xgboost,1
+2026-01-01T00:00:00.000Z,Alberta,"Arts, entertainment and recreation [71]",29.710714,xgboost,2
+2026-04-01T00:00:00.000Z,Alberta,"Arts, entertainment and recreation [71]",35.92011,xgboost,3
+2026-07-01T00:00:00.000Z,Alberta,"Arts, entertainment and recreation [71]",26.054312,xgboost,4
+2025-10-01T00:00:00.000Z,Alberta,Construction [23],39.408657,xgboost,1
+2026-01-01T00:00:00.000Z,Alberta,Construction [23],37.077705,xgboost,2
+2026-04-01T00:00:00.000Z,Alberta,Construction [23],42.998333,xgboost,3
+2026-07-01T00:00:00.000Z,Alberta,Construction [23],35.580215,xgboost,4
+2025-10-01T00:00:00.000Z,Alberta,"Administrative and support, waste management and remediation services [56]",26.987753,xgboost,1
+2026-01-01T00:00:00.000Z,Alberta,"Administrative and support, waste management and remediation services [56]",29.417809,xgboost,2
+2026-04-01T00:00:00.000Z,Alberta,"Administrative and support, waste management and remediation services [56]",35.1221,xgboost,3
+2026-07-01T00:00:00.000Z,Alberta,"Administrative and support, waste management and remediation services [56]",28.529163,xgboost,4
+2025-10-01T00:00:00.000Z,Alberta,Finance and insurance [52],18.996727,xgboost,1
+2026-01-01T00:00:00.000Z,Alberta,Finance and insurance [52],19.790958,xgboost,2
+2026-04-01T00:00:00.000Z,Alberta,Finance and insurance [52],22.058987,xgboost,3
+2026-07-01T00:00:00.000Z,Alberta,Finance and insurance [52],21.51335,xgboost,4
+2025-10-01T00:00:00.000Z,Alberta,Health care and social assistance [62],22.618692,xgboost,1
+2026-01-01T00:00:00.000Z,Alberta,Health care and social assistance [62],22.880205,xgboost,2
+2026-04-01T00:00:00.000Z,Alberta,Health care and social assistance [62],25.430065,xgboost,3
+2026-07-01T00:00:00.000Z,Alberta,Health care and social assistance [62],24.878891,xgboost,4
+2025-10-01T00:00:00.000Z,Alberta,Information and cultural industries [51],15.345565,xgboost,1
+2026-01-01T00:00:00.000Z,Alberta,Information and cultural industries [51],16.036274,xgboost,2
+2026-04-01T00:00:00.000Z,Alberta,Information and cultural industries [51],18.96237,xgboost,3
+2026-07-01T00:00:00.000Z,Alberta,Information and cultural industries [51],18.309107,xgboost,4
+2025-10-01T00:00:00.000Z,Alberta,Educational services [61],12.56102,xgboost,1
+2026-01-01T00:00:00.000Z,Alberta,Educational services [61],11.973195,xgboost,2
+2026-04-01T00:00:00.000Z,Alberta,Educational services [61],12.813415,xgboost,3
+2026-07-01T00:00:00.000Z,Alberta,Educational services [61],13.940298,xgboost,4
+2025-10-01T00:00:00.000Z,British Columbia,Accommodation and food services [72],47.51048,xgboost,1
+2026-01-01T00:00:00.000Z,British Columbia,Accommodation and food services [72],49.894043,xgboost,2
+2026-04-01T00:00:00.000Z,British Columbia,Accommodation and food services [72],61.541725,xgboost,3
+2026-07-01T00:00:00.000Z,British Columbia,Accommodation and food services [72],48.282776,xgboost,4
+2025-10-01T00:00:00.000Z,British Columbia,Wholesale trade [41],22.34482,xgboost,1
+2026-01-01T00:00:00.000Z,British Columbia,Wholesale trade [41],22.282589,xgboost,2
+2026-04-01T00:00:00.000Z,British Columbia,Wholesale trade [41],24.777718,xgboost,3
+2026-07-01T00:00:00.000Z,British Columbia,Wholesale trade [41],24.193779,xgboost,4
+2025-10-01T00:00:00.000Z,British Columbia,Utilities [22],30.64131,xgboost,1
+2026-01-01T00:00:00.000Z,British Columbia,Utilities [22],26.576275,xgboost,2
+2026-04-01T00:00:00.000Z,British Columbia,Utilities [22],27.103336,xgboost,3
+2026-07-01T00:00:00.000Z,British Columbia,Utilities [22],23.762072,xgboost,4
+2025-10-01T00:00:00.000Z,British Columbia,Transportation and warehousing [48-49],30.642256,xgboost,1
+2026-01-01T00:00:00.000Z,British Columbia,Transportation and warehousing [48-49],28.069168,xgboost,2
+2026-04-01T00:00:00.000Z,British Columbia,Transportation and warehousing [48-49],29.902657,xgboost,3
+2026-07-01T00:00:00.000Z,British Columbia,Transportation and warehousing [48-49],30.244804,xgboost,4
