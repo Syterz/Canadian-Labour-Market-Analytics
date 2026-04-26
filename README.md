@@ -28,14 +28,14 @@ Statistics Canada CSVs
    dbt Core(dbt-databricks)     ← Mart models, data tests, documentation                                            
         │
         ▼
-   Databricks ML (XGBoost)      ← Time series forecasting of vacancy rates, experiment tracking,                    ← 🔨 In Progress
+   Databricks ML (XGBoost)      ← Time series forecasting of vacancy rates, experiment tracking,                    
    + MLflow                        model versioning
         │
         ▼
-   Predictions Delta Table      ← Forecasted rates stored for querying                                              ← ⏳ 
+   Predictions Delta Table      ← Forecasted rates stored for querying                                              
         │
         ▼
-   Streamlit / Power BI         ← Dashboard layer                                                                   ← ⏳ 
+   Streamlit / Power BI         ← Dashboard layer                                                                   ← 🔨 In Progress 
         │
         ▼
    Apache Airflow (Astro CLI)   ← End-to-end orchestration, monthly scheduling,                                     ← ⏳ 
@@ -88,9 +88,9 @@ Statistics Canada CSVs
 │   └── glue_ETL_job.py       # PySpark job: raw CSV → cleaned Parquet
 │
 ├── databricks/
-│   ├── transform_vacancy_metrics.ipynb           <- Schema work + null/dupe check + pivot + output to S3 (curated)
-│   ├── register_curated_tables.ipynb             <- Registers curated Parquet as Delta tables in Unity Catalog
-│   └── ml_vacancy_employed_forecast.ipynb        <- XGBoost forecasting + MLflow tracking                              ← 🔨 In Progress
+│   ├── transform_vacancy_metrics.ipynb           # Schema work + null/dupe check + pivot + output to S3 (curated)
+│   ├── register_curated_tables.ipynb             # Registers curated Parquet as Delta tables in Unity Catalog
+│   └── ml_vacancy_and_wage_forecast.ipynb        # XGBoost forecasting + MLflow tracking                              
 |
 ├── dbt/
 │   ├── models/
@@ -118,7 +118,7 @@ Statistics Canada CSVs
 │       └── canada_labour_pipeline.py       # End-to-end DAG: ingest → Glue → Databricks → dbt → ML (To be added)
 │
 ├── dashboard/
-│   └── app.py                       # Streamlit app (or link to .pbix) (To be added)
+│   └── app.py                       # Streamlit app (or link to .pbix) (To be added)               ← 🔨 In Progress
 │
 ├── data/
 │   └── sample/
@@ -133,7 +133,8 @@ Statistics Canada CSVs
 │       │    └── quarterly_curated_sample.csv     
 │       │
 │       └── predicted/    # 100-row samples of predicted data
-│            └── prediction_sample.csv  (To be added)
+│            ├── predictions_vacancies_sample.csv
+│            └── predictions_wage_sample.csv
 │
 ├── .github/
 │   └── workflows/
@@ -178,7 +179,7 @@ Output is written to `s3://your-bucket-name/curated/`.
 #### register_curated_tables.ipynb
 Import `databricks/register_curated_tables.ipynb` into Databricks.
 Update the S3 paths in cell 1 and run it.
-Output are saved to the Unity Catalog of Databricks.
+Outputs are saved to the Unity Catalog of Databricks.
 
 ### 4. Run dbt Models
 ```bash
@@ -192,24 +193,35 @@ dbt test
 ### 5. Github Actions CI/CD
 The pipeline includes automated dbt testing on every push to `main`. To enable it:
 1. Add the following secrets to your GitHub repository under Settings → Secrets → Actions:
-   - `DATABRICKS_HOST` — your Databricks workspace URL
-   - `DATABRICKS_TOKEN` — your Databricks personal access token
-   - `DATABRICKS_HTTP_PATH` — your SQL warehouse HTTP path
+   - `DATABRICKS_HOST` - your Databricks workspace URL
+   - `DATABRICKS_TOKEN` - your Databricks personal access token
+   - `DATABRICKS_HTTP_PATH` - your SQL warehouse HTTP path
 2. Push to `main` to trigger the workflow automatically
 
 ### 6. Databricks ML (XGBoost) + MLflow
+1. Import `databricks/ml_vacancy_and_wage_forecast.ipynb` into Databricks and ensure the following packages are installed:
+   - xgboost
+   - shap
+   - optuna
+   - mlflow
+2. Run all cells in order. The notebook is self-contained and reads directly from the Delta tables produced in Step 4.
+
+Predictions are saved to `workspace.canada_labour_market.predictions_vacancies` and `predictions_wage` in Unity Catalog.
+
+**Train/test Split:**
+- Training: 2015 Q1 - 2023 Q2
+- Optuna validation (internal): 2021 Q1 - 2023 Q2
+- Test (held out): 2023 Q3 - 2025 Q3
+
+**Model Performance**
+
+| Model | Test RMSE | Test MAPE | R² | vs Naive lag1 | vs Naive lag4 |
+|-------|-----------|-----------|-----|----------------|----------------|
+| Vacancies per 1,000 | 7.56 | 18.8% | 0.731 | -22.7% | -44.4% |
+| Avg Hourly Wage | 2.00 | 4.6% | 0.904 | -6.9% | -27.4% |
+
+### 7.  Streamlit/Power BI
 ⏳ Coming soon - see Pipeline Architecture for current progress
-
-
----
-
-## Data Layers (Medallion Architecture)
-
-|   Layer   |      Location                       |             Description                                        |
-|-----------|-------------------------------------|----------------------------------------------------------------| 
-| 🥉 Bronze | `s3://bucket/raw/`                  | Raw CSV files as ingested from Statistics Canada              |
-| 🥈 Silver | `s3://bucket/processed/ & /curated/`| Cleaned, typed Parquet, output of Glue and Databricks |
-| 🥇 Gold   | `workspace.canada_labour_market`    | Business metrics, mart models, tested and documented          |
 
 ---
 
@@ -221,10 +233,18 @@ Statistics Canada
 
 Data is publicly available under the Statistics Canada Open Licence.
 
+## Data Layers (Medallion Architecture)
+
+|   Layer   |      Location                       |             Description                                        |
+|-----------|-------------------------------------|----------------------------------------------------------------| 
+| 🥉 Bronze | `s3://bucket/raw/`                  | Raw CSV files as ingested from Statistics Canada              |
+| 🥈 Silver | `s3://bucket/processed/ & /curated/`| Cleaned, typed Parquet, output of Glue and Databricks |
+| 🥇 Gold   | `workspace.canada_labour_market`    | Business metrics, mart models, tested and documented          |
+
 ---
 
 ## Design Decisions
-
+### Data Ingestion and EDA
 **Why Glue for ingestion and Databricks for transformation?**
 Glue handled the ingestion layer: column selection, type casting, string normalization, date filtering, and writing partitioned Parquet to S3. Partitioning by Year and GEO at this stage makes downstream reads faster by pruning irrelevant partitions before any transformation begins.
 
@@ -235,6 +255,7 @@ An initial approach joined NAICS employed (SEPH) data with vacancy datasets to d
 **Why dbt on Databricks instead of a separate warehouse?**
 Running dbt directly on Databricks avoids an unnecessary data movement step into a separate warehouse. The curated Delta tables are already query-ready, and dbt-databricks connects natively to the cluster, keeping the stack unified and reducing infrastructure overhead.
 
+### dbt Models
 **Foreign Accessibility Tier methodology**
 The foreign accessibility tier is a composite metric designed to identify NAICS sectors most accessible to foreign workers seeking Canadian employment (focus on high wage stream). It combines three signals:
 
@@ -242,7 +263,29 @@ The foreign accessibility tier is a composite metric designed to identify NAICS 
 - **Vacancy demand** — whether the sector's vacancy rate is above the provincial 75th or 50th percentile for that year, using a data-driven threshold rather than an arbitrary cutoff
 - **Sustained demand** — whether the sector has been above the p75 vacancy rate for at least 75% of quarters in the last 2 years, indicating structural rather than temporary labour shortage
 
-**Important caveat:** Canadian immigration eligibility is formally determined by NOC occupation codes, not NAICS industry codes. This metric uses NAICS-based vacancy and wage data as a proxy. A sector meeting all three conditions is likely to have roles accessible to foreign workers, but individual job eligibility depends on specific NOC codes, employer LMIA applications, and provincial nominee program criteria.
+**Caveat on Foreign Accessibility Tier** 
+Canadian immigration eligibility is formally determined by NOC occupation codes, not NAICS industry codes. This metric uses NAICS-based vacancy and wage data as a proxy. A sector meeting all three conditions is likely to have roles accessible to foreign workers, but individual job eligibility depends on specific NOC codes, employer LMIA applications, and provincial nominee program criteria.
+
+### ML Forecasting
+**Missing and Anomalous data Handling**
+NAICS sectors with greater than 50% missing data or 4 or more consecutive missing quarters were dropped. Remaining gaps of 1–3 quarters were filled using linear interpolation with ffill for leading edge NAs where interpolation had no prior value to reference. Territories (Northwest Territories, Yukon, Nunavut) were excluded entirely due to missing data exceeding 70%.
+
+The anomalies exceeding 3.5 standard deviations were found in both vacancies (2 instances) and wage (6 instances), mostly concentrated during and after COVID. Two non-COVID wage anomalies stand out: a 2018 Q1 spike in Saskatchewan Healthcare [62], likely driven by contract negotiations and retro-pay settlements, and a 2015 Q2 spike in New Brunswick Information and Cultural Industries [51], likely linked to corporate restructuring following Bell Aliant's privatization. Both were intentionally retained as genuine labour market events rather than data errors.
+
+**Why was linear interpolation chosen and how was it done?**
+Linear interpolation was chosen because the quarterly data is evenly spaced, making it equivalent to time-weighted interpolation while being simpler to implement. Gaps were capped at 3 consecutive quarters and beyond that, the NAICS series was dropped entirely rather than imputed, avoiding fabrication and unreliability of extended missing histories. Additionally, bfill was avoided to prevent data leakage during model training.
+
+**Feature Selection** 
+Based on ablation testing, permutation testing and dropping the features, numerous columns were removed as they negatively impacted RMSE when included. Final feature set retains:
+*Vacancies*
+- `vacancies_per_1000_roll2`, `roll3`, `lag4`, `lag6`, `lag5` and `lag3`
+- `avg_offered_hourly_wage_lag4`
+- `quarter_cos`
+- `naics_encoded`, `is_post_covid_boom`, and `is_covid` dummy
+
+*Wage*
+- `avg_offered_hourly_wage_lag1`, `lag2`, `lag3`, `lag4`, and `lag6`
+- `quarter_cos`
 
 ---
 
@@ -255,13 +298,13 @@ The foreign accessibility tier is a composite metric designed to identify NAICS 
 - Data quality & validation (null checks, deduplication, schema assertions, pre-export validation)
 - Analytics engineering (dbt-databricks, staging models, mart models, data tests)
 - CI/CD (GitHub Actions running dbt tests on PR)
+- Machine learning (XGBoost time series forecasting, MLflow experiment tracking)
 
 **In Progress**
-- Machine learning (XGBoost time series forecasting, MLflow experiment tracking)
+- Dashboard development (Streamlit)
 
 **Planned**
 - Orchestration (Apache Airflow end-to-end pipeline scheduling)
-- Dashboard development (Streamlit)
 
 ---
 
