@@ -24,10 +24,15 @@ employment_subsector_yoy as (
 employment_yoy_pct as (
     select
         *,
-        round(
-            (total_employment - prev_year_employment)
-            / nullif(prev_year_employment, 0) * 100, 2
-        ) as employment_yoy_growth_pct
+        case
+            when total_employment is not null
+            and prev_year_employment is not null
+            then round(
+                (total_employment - prev_year_employment)
+                / nullif(prev_year_employment, 0) * 100, 2
+            )
+            else null
+        end as employment_yoy_growth_pct
     from employment_subsector_yoy
 ),
 
@@ -70,10 +75,14 @@ data_digital_concentration as (
 growth_ranked as (
     select
         *,
-        rank() over (
-            partition by geo, year
-            order by employment_yoy_growth_pct desc
-        ) as growth_rank
+        case
+            when employment_yoy_growth_pct is not null
+            then rank() over (
+                partition by geo, year
+                order by employment_yoy_growth_pct desc
+            )
+            else null
+        end as growth_rank
     from employment_yoy_pct
 )
 
