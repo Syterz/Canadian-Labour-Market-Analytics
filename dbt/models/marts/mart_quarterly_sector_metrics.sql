@@ -35,24 +35,38 @@ quarterly_yoy as (
 quarterly_yoy_pct as (
     select
         *,
-        round(
-            (vacancies_per_1000 - prev_year_vacancies_per_1000)
-            / nullif(prev_year_vacancies_per_1000, 0) * 100, 2
-        ) as vacancy_rate_yoy_change_pct,
-        round(
-            (avg_offered_hourly_wage - prev_year_wage)
-            / nullif(prev_year_wage, 0) * 100, 2
-        ) as wage_yoy_change_pct
+        case
+            when vacancies_per_1000 is not null
+            and prev_year_vacancies_per_1000 is not null
+            then round(
+                (vacancies_per_1000 - prev_year_vacancies_per_1000)
+                / nullif(prev_year_vacancies_per_1000, 0) * 100, 2
+            )
+            else null
+        end as vacancy_rate_yoy_change_pct,
+        case
+            when avg_offered_hourly_wage is not null
+            and prev_year_wage is not null
+            then round(
+                (avg_offered_hourly_wage - prev_year_wage)
+                / nullif(prev_year_wage, 0) * 100, 2
+            )
+            else null
+        end as wage_yoy_change_pct
     from quarterly_yoy
 ),
 
 demand_ranked as (
     select
         *,
-        rank() over (
-            partition by geo, date_parsed
-            order by job_vacancy_rate desc
-        ) as demand_rank
+        case
+            when job_vacancy_rate is not null
+            then rank() over (
+                partition by geo, date_parsed
+                order by job_vacancy_rate desc
+            )
+            else null
+        end as demand_rank
     from quarterly_yoy_pct
 ),
 
@@ -63,6 +77,7 @@ provincial_yearly_percentiles as (
         percentile_cont(0.5) within group (order by job_vacancy_rate) as p50_vacancy_rate,
         percentile_cont(0.75) within group (order by job_vacancy_rate) as p75_vacancy_rate
     from quarterly
+    where job_vacancy_rate is not null
     group by geo, year
 ),
 
