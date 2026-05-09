@@ -35,11 +35,17 @@ Statistics Canada CSVs
    Predictions Delta Table      ← Forecasted rates stored for querying                                              
         │
         ▼
-   Streamlit / Power BI         ← Dashboard layer                                                                   ← 🔨 In Progress 
+   Streamlit / Power BI         ← Dashboard layer                                                                   
         │
         ▼
-   Apache Airflow (Astro CLI)   ← End-to-end orchestration, monthly scheduling,                                     ← ⏳ 
+   Apache Airflow (Astro CLI)   ← End-to-end orchestration, quarterly scheduling,                                     ← 🔨 In Progress 
                                    pipeline dependency management
+                                        ➥ Ingesting        ← 🔨 In Progress 
+                                        ➥ Glue             ← 🔨 In Progress 
+                                        ➥ Databricks       ← 🔨 In Progress 
+                                        ➥ dbt              ← 🔨 In Progress 
+                                        ➥ ML               ← 🔨 In Progress 
+     
 ```
 
 ## Key Metrics Produced
@@ -115,10 +121,14 @@ Statistics Canada CSVs
 │
 ├── airflow/
 │   └── dags/
-│       └── canada_labour_pipeline.py       # End-to-end DAG: ingest → Glue → Databricks → dbt → ML (To be added)
+│       └── canada_labour_pipeline.py       # End-to-end DAG: ingest → Glue → Databricks → dbt → ML (To be added)       ← 🔨 In Progress
 │
 ├── dashboard/
-│   └── app.py                       # Streamlit app (or link to .pbix) (To be added)               ← 🔨 In Progress
+│   ├── Canadian Labour Market Analytics Report.pbix    
+│   └── screenshots
+│       ├── page1.png
+│       ├── page2.png
+│       └── page3.png       
 │
 ├── data/
 │   └── sample/
@@ -215,12 +225,25 @@ Predictions are saved to `workspace.canada_labour_market.predictions_vacancies` 
 
 **Model Performance**
 
-| Model | Test RMSE | Test MAPE | R² | vs Naive lag1 | vs Naive lag4 |
+| Model | Test RMSE | Test MAPE | R² | vs Naive lag1 RMSE | vs Naive lag4 RMSE |
 |-------|-----------|-----------|-----|----------------|----------------|
 | Vacancies per 1,000 | 7.56 | 18.8% | 0.731 | -22.7% | -44.4% |
 | Avg Hourly Wage | 2.00 | 4.6% | 0.904 | -6.9% | -27.4% |
 
-### 7.  Streamlit/Power BI
+### 7. Dashboard
+Open [`dashboard/Canadian_Labour_Market_Analytics_Report.pbix`](dashboard/Canadian_Labour_Market_Analytics_Report.pbix) in Power BI Desktop.
+
+The report contains three pages:
+- **Sector Accessibility** - current foreign accessibility tier rankings by province and quarter
+- **Historical & Forecasted Trends** - vacancy and wage trends with XGBoost forecasts through 2025 Q4 to 2026 Q3
+- **Employment Trends by Sub-Sector** - monthly employment trends and YoY growth by NAICS sub-sector
+
+![Page 1](dashboard/screenshots/page1.png)
+![Page 2](dashboard/screenshots/page2.png)
+![Page 3](dashboard/screenshots/page3.png)
+
+
+### 8.  Apache Airflow (Astro CLI)
 ⏳ Coming soon - see Pipeline Architecture for current progress
 
 ---
@@ -287,6 +310,8 @@ Based on ablation testing, permutation testing and dropping the features, numero
 - `avg_offered_hourly_wage_lag1`, `lag2`, `lag3`, `lag4`, and `lag6`
 - `quarter_cos`
 
+Note: quarter cyclical encoding uses month values (1, 4, 7, 10) rather than quarter numbers (1–4), producing equivalent but geometrically different sin/cos values. Each quarter retains a unique encoding so model learning is unaffected.
+
 ---
 
 ## Skills Demonstrated
@@ -299,11 +324,9 @@ Based on ablation testing, permutation testing and dropping the features, numero
 - Analytics engineering (dbt-databricks, staging models, mart models, data tests)
 - CI/CD (GitHub Actions running dbt tests on PR)
 - Machine learning (XGBoost time series forecasting, MLflow experiment tracking)
+- Dashboard development (Power BI)
 
 **In Progress**
-- Dashboard development (Streamlit)
-
-**Planned**
 - Orchestration (Apache Airflow end-to-end pipeline scheduling)
 
 ---
