@@ -124,7 +124,7 @@ Statistics Canada CSVs
 │       └── canada_labour_pipeline.py       # End-to-end DAG: ingest → Glue → Databricks → dbt → ML (To be added)       ← 🔨 In Progress
 │
 ├── dashboard/
-│   ├── Canadian Labour Market Analytics Report.pbix    
+│   ├── Canadian_Labour_Market_Analytics_Report.pbix    
 │   └── screenshots
 │       ├── page1.png
 │       ├── page2.png
